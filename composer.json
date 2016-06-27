@@ -22,7 +22,7 @@
     "minimum-stability": "stable",
     "autoload": {
          "psr-4": {
-             "stripe\\": "src/"
+             "davidjeddy\\stripe\\": "src/"
          }
     }
 }
