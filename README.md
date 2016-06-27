@@ -1,5 +1,5 @@
 Yii2 Stripe Wrapper.
-==========
+====================
 Installation
 --------------------------
 
@@ -8,13 +8,13 @@ The preferred way to install this extension is through http://getcomposer.org/do
 Either run
 
 ```sh
-php composer.phar require ruskid/yii2-stripe "dev-master"
+php composer.phar require davidjeddy/yii2-stripe "dev-master"
 ```
 
 or add
 
 ```json
-"ruskid/yii2-stripe": "dev-master"
+"davidjeddy/yii2-stripe": "~1.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -27,7 +27,7 @@ Add a new component in main.php
 'components' => [
 ...
 'stripe' => [
-    'class' => 'ruskid\stripe\Stripe',
+    'class' => 'davidjeddy\stripe\Stripe',
     'publicKey' => "pk_test_xxxxxxxxxxxxxxxxxxx",
     'privateKey' => "sk_test_xxxxxxxxxxxxxxxxxx",
 ],
@@ -38,7 +38,7 @@ Add a new component in main.php
 To render simple checkout form just call the widget in the view, it will automatically register the scripts.
 Check stripe documentation for more options.
 ```php
-use ruskid\stripe\StripeCheckout;
+use davidjeddy\stripe\StripeCheckout;
 
 <?= 
 StripeCheckout::widget([
@@ -53,7 +53,7 @@ StripeCheckout::widget([
 
 Custom checkout form is an extended version of simple form, but you can customize the button (see buttonOptions) and handle token as you want (tokenFunction).
 ```php
-use ruskid\stripe\StripeCheckoutCustom;
+use davidjeddy\stripe\StripeCheckoutCustom;
 
 <?= 
 StripeCheckoutCustom::widget([
@@ -82,7 +82,7 @@ Use of <b>Jquery Payment library</b> is optional, you can disable format and val
 You can also change JsExpression for response and request handlers.
 
 ```php
-use ruskid\stripe\StripeForm;
+use davidjeddy\stripe\StripeForm;
 
  <?php
  $form = StripeForm::begin([
@@ -125,6 +125,13 @@ use ruskid\stripe\StripeForm;
  </div>
 
  <div id="payment-errors"></div>
+ 
+ <?= Html::submitButton('Submit'); ?>
+ 
  <?php StripeForm::end(); ?>
 ```
 
+Contribution / Credit
+--------------------------
+Forked From: https://github.com/ruskid/yii2-stripe
+I would like to give the original author all due credit, great package.
