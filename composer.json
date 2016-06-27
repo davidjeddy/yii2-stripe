@@ -1,24 +1,28 @@
 {
-    "name": "ruskid/yii2-stripe",
+    "name": "davidjeddy/yii2-stripe",
     "type": "library",
     "description": "Yii2 Stripe Wrapper",
     "keywords": ["yii2","stripe"],
-    "homepage": "https://github.com/ruskid/yii2-stripe",
+    "homepage": "https://github.com/davidjeddy/yii2-stripe",
     "license": "GNU",
     "authors": [
         {
             "name": "Victor Demin",
             "email": "demmbox@gmail.com"
-        }
+        },
+        {
+            "name": "David J Eddy",
+            "email": "me@davidjeddy.com"
+        },
     ],
     "require": {
         "yiisoft/yii2": "*",
         "bower-asset/jquery.payment": "*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
          "psr-4": {
-             "ruskid\\stripe\\": ""
+             "davidjeddy\\stripe\\": "davidjeddy\\src\\stripe\\"
          }
     }
 }

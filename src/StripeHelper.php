@@ -1,12 +1,13 @@
 <?php
 
 /**
- * @copyright Copyright Victor Demin, 2014
- * @license https://github.com/ruskid/yii2-stripe/LICENSE
- * @link https://github.com/ruskid/yii2-stripe#readme
+ * @copyright Copyright Victor Demin, 2015
+ * @copyright Copyright David J Eddy, 2016
+ * @license https://github.com/davidjeddy/yii2-stripe/LICENSE
+ * @link https://github.com/davidjeddy/yii2-stripe#README
  */
 
-namespace ruskid\stripe;
+namespace davidjeddy\stripe;
 
 use yii\base\Exception;
 
