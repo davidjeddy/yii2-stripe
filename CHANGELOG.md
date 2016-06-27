@@ -18,3 +18,7 @@ FIXed namespace to file system mapping
 1.2.2
 -----
 ADDed fix to CHANGELOG
+
+1.2.3
+-----
+FIXed namespace to file system mapping (again)
