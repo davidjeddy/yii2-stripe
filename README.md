@@ -1,5 +1,9 @@
 Yii2 Stripe Wrapper.
-====================
+======
+Badges
+------
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f6411434-fdb3-41a3-bc0d-b8fd9516d68d/mini.png)](https://insight.sensiolabs.com/projects/f6411434-fdb3-41a3-bc0d-b8fd9516d68d)
+
 Installation
 --------------------------
 
