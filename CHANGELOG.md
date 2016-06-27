@@ -10,3 +10,11 @@ Init Fork from https://github.com/ruskid/yii2-stripe
 Move source to ./src/ and UPDATED composer.json
 ADDED ChangeLog.md
 UPDATED StripeForm's JS to remove double POSTing behavior 
+
+1.2.1
+-----
+FIXed namespace to file system mapping
+
+1.2.2
+-----
+ADDed fix to CHANGELOG
