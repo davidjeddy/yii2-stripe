@@ -22,3 +22,8 @@ ADDed fix to CHANGELOG
 1.2.3
 -----
 FIXed namespace to file system mapping (again)
+
+1.2.4
+-----
+FIXed README.md file ending per https://insight.sensiolabs.com analysis
+FIXed composer.json license value per http://spdx.org/licenses/ options
