@@ -13,7 +13,7 @@
         {
             "name": "David J Eddy",
             "email": "me@davidjeddy.com"
-        },
+        }
     ],
     "require": {
         "yiisoft/yii2": "*",
