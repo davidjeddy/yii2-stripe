@@ -27,3 +27,5 @@ FIXed namespace to file system mapping (again)
 -----
 FIXed README.md file ending per https://insight.sensiolabs.com analysis
 FIXed composer.json license value per http://spdx.org/licenses/ options
+
+ADDed badge from https://insight.sensiolabs.com to README.md
