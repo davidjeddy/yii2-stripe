@@ -3,13 +3,12 @@
 /**
  * @copyright Copyright Victor Demin, 2015
  * @copyright Copyright David J Eddy, 2016
- * @license https://github.com/davidjeddy/yii2-stripe/LICENSE
  * @link https://github.com/davidjeddy/yii2-stripe#README
  */
 
 namespace davidjeddy\stripe;
 
-use Yii;
+use yii;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
@@ -18,8 +17,22 @@ use yii\web\JsExpression;
  * https://stripe.com/docs/tutorials/forms
  *
  * @author Victor Demin <demmbox@gmail.com>
+ * @author David J Eddy <me@davidjeddy.com>
  */
-class StripeForm extends \yii\widgets\ActiveForm {
+class StripeForm extends \yii\widgets\ActiveForm
+{
+    /* Stripe constants */
+    const NUMBER_ID = 'number';
+    const CVC_ID = 'cvc';
+    const MONTH_ID = 'exp-month';
+    const YEAR_ID = 'exp-year';
+    const MONTH_YEAR_ID = 'exp-month-year';
+
+    /* Auto fill spec. @see https://html.spec.whatwg.org/multipage/forms.html */
+    const AUTO_CC_ATTR = 'cc-number';
+    const AUTO_EXP_ATTR = 'cc-exp';
+    const AUTO_MONTH_ATTR = 'cc-exp-month';
+    const AUTO_YEAR_ATTR = 'cc-exp-year';
 
     /**
      * @see Stripe's javascript location
@@ -81,18 +94,6 @@ class StripeForm extends \yii\widgets\ActiveForm {
      */
     public $brandContainerId = 'cc-brand';
 
-    //Stripe constants
-    const NUMBER_ID = 'number';
-    const CVC_ID = 'cvc';
-    const MONTH_ID = 'exp-month';
-    const YEAR_ID = 'exp-year';
-    const MONTH_YEAR_ID = 'exp-month-year'; //actually not stripe =)
-    //Auto fill spec. @see https://html.spec.whatwg.org/multipage/forms.html
-    const AUTO_CC_ATTR = 'cc-number';
-    const AUTO_EXP_ATTR = 'cc-exp';
-    const AUTO_MONTH_ATTR = 'cc-exp-month';
-    const AUTO_YEAR_ATTR = 'cc-exp-year';
-
     /**
      * @see Init extension default
      */
@@ -111,15 +112,15 @@ class StripeForm extends \yii\widgets\ActiveForm {
         //Set default response behavior
         if (!isset($this->stripeResponseHandler)) {
             $this->stripeResponseHandler = 'function stripeResponseHandler(status, response) {
-                    var $form = $("#' . $this->options['id'] . '");
-                    if (response.error) {
-                        $form.find("#' . $this->errorContainerId . '").text(response.error.message);
-                        $form.find("button").prop("disabled", false);
-                    } else {
-                        var token = response.id;
-                        $form.append($("<input type=\"hidden\" name=\"' . $this->tokenInputName . '\" id=\"' . $this->tokenInputName . '\" />").val(token));
-                        $form.get(0).submit();
-                    }
+                var $form = $("#' . $this->options['id'] . '");
+                if (response.error) {
+                    $form.find("#' . $this->errorContainerId . '").text(response.error.message);
+                    $form.find("button").prop("disabled", false);
+                } else {
+                    var token = response.id;
+                    $form.append($("<input type=\"hidden\" name=\"' . $this->tokenInputName . '\" id=\"' . $this->tokenInputName . '\" />").val(token));
+                    $form.get(0).submit();
+                }
             };';
         }
     }
@@ -143,12 +144,11 @@ class StripeForm extends \yii\widgets\ActiveForm {
         $view = $this->getView();
         $view->registerJsFile($this->stripeJs, ['position' => \yii\web\View::POS_HEAD]);
 
-        $js = "Stripe.setPublishableKey('" . Yii::$app->stripe->publicKey . "');";
-        $view->registerJs($js, \yii\web\View::POS_BEGIN);
-
         //form scripts
-        $view->registerJs($this->stripeResponseHandler, \yii\web\View::POS_READY);
+        $view->registerJs("Stripe.setPublishableKey('" . Yii::$app->stripe->publicKey . "');", \yii\web\View::POS_BEGIN);
+
         $view->registerJs($this->stripeRequestHandler, \yii\web\View::POS_READY);
+        $view->registerJs($this->stripeResponseHandler, \yii\web\View::POS_READY);
     }
 
     /**
