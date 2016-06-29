@@ -29,23 +29,7 @@ class StripeForm extends \yii\widgets\ActiveForm {
 
     /**
      * Js Expression that will handle the response.
-     *
-     * If not set the default behavior will be used:
-     * function stripeResponseHandler(status, response) {
-     *      var $form = $('#payment-form');
-     *        if (response.error) {
-     *           // Show the errors on the form
-     *           $form.find('.payment-errors').text(response.error.message);
-     *           $form.find('button').prop('disabled', false);
-     *        } else {
-     *           // response contains id and card, which contains additional card details
-     *           var token = response.id;
-     *           // Insert the token into the form so it gets submitted to the server
-     *           $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-     *           // and submit
-     *           $form.get(0).submit();
-     *        }
-     * }
+     * If not over written the default behavior from within init() will be used
      *
      * @var JsExpression
      */
@@ -53,18 +37,7 @@ class StripeForm extends \yii\widgets\ActiveForm {
 
     /**
      * Js Expression that will handle the request.
-     *
-     * If not set the default behavior will be used:
-     * jQuery(function($) {
-     *    $('#payment-form').submit(function(event) {
-     *         var $form = $(this);
-     *         // Disable the submit button to prevent repeated clicks
-     *         $form.find('button').prop('disabled', true);
-     *          Stripe.card.createToken($form, stripeResponseHandler);
-     *          // Prevent the form from submitting with the default action
-     *          return false;
-     *      });
-     *   });
+     * If not over written the default behavior from within init() will be used
      *
      * @var JsExpression
      */
@@ -126,6 +99,15 @@ class StripeForm extends \yii\widgets\ActiveForm {
     public function init() {
         parent::init();
 
+        //Set default request behavior when no client validation applied
+        if (!isset($this->stripeRequestHandler)) {
+            $this->stripeRequestHandler = 'jQuery(function($) {
+                $("#' . $this->options['id'] . '").submit(function(event) {
+                    event.preventDefault();
+                });
+            });';
+        }
+
         //Set default response behavior
         if (!isset($this->stripeResponseHandler)) {
             $this->stripeResponseHandler = 'function stripeResponseHandler(status, response) {
@@ -139,15 +121,6 @@ class StripeForm extends \yii\widgets\ActiveForm {
                         $form.get(0).submit();
                     }
             };';
-        }
-
-        //Set default request behavior when no client validation applied
-        if (!isset($this->stripeRequestHandler)) {
-            $this->stripeRequestHandler = 'jQuery(function($) {
-                $("#' . $this->options['id'] . '").submit(function(event) {
-                    event.preventDefault();
-                });
-            });';
         }
     }
 
@@ -229,16 +202,9 @@ class StripeForm extends \yii\widgets\ActiveForm {
                         $year.toggleInputError(!$.payment.validateCardExpiry($month.val(), $year.val()));
                     }
 
-<<<<<<< bac577241de4cb45877291ee7b1c0cfa0bb3d62f:StripeForm.php
-                    if($form.find(".' . $this->errorClass . '").length != 0){
-                        e.preventDefault();
-                        return false;
-                    }else{
-=======
                     if ($form.find(".' . $this->errorClass . '").length != 0) {
                         return false;
                     } else {
->>>>>>> Move source to ./src/ and UPDATED composer.json:src/StripeForm.php
                         $(this).prop("disabled", true);
                         Stripe.card.createToken($form, stripeResponseHandler);
                         return true;
@@ -341,26 +307,7 @@ class StripeForm extends \yii\widgets\ActiveForm {
      * @return string genetared input tag
      */
     public function monthAndYearInput($options = []) {
-<<<<<<< bac577241de4cb45877291ee7b1c0cfa0bb3d62f:StripeForm.php
-       $defaultOptions = [
-		'id' => self::MONTH_YEAR_ID,
-		'class' => 'form-control',
-		'autocomplete' => self::AUTO_EXP_ATTR,
-		'placeholder' => '•• / ••',
-		'required' => true,
-		'type' => 'tel',
-	];
-	$mergedOptions = array_merge($defaultOptions, $options);
-	StripeHelper::secCheck($mergedOptions);
-	$mergedOptions['data-stripe'] = self::MONTH_YEAR_ID;
-	$inputs = Html::input('text', null, null, $mergedOptions);
-
-	//Append hidden year and month inputs that will get value from mixed and send to stripe
-	$inputs = $inputs . $this->monthInput(['type' => 'hidden']);
-	$inputs = $inputs . $this->yearInput(['type' => 'hidden']);
-	return $inputs;
-=======
-           $defaultOptions = [
+        $defaultOptions = [
             'id' => self::MONTH_YEAR_ID,
             'class' => 'form-control',
             'autocomplete' => self::AUTO_EXP_ATTR,
@@ -377,7 +324,6 @@ class StripeForm extends \yii\widgets\ActiveForm {
         $inputs = $inputs . $this->monthInput(['type' => 'hidden']);
         $inputs = $inputs . $this->yearInput(['type' => 'hidden']);
         return $inputs;
->>>>>>> Move source to ./src/ and UPDATED composer.json:src/StripeForm.php
     }
 
 }
