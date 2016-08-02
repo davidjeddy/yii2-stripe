@@ -193,13 +193,9 @@ class StripeForm extends \yii\widgets\ActiveForm
                         $year.toggleInputError(!$.payment.validateCardExpiry($month.val(), $year.val()));
                     }
 
-                    if ($form.find(".' . $this->errorClass . '").length != 0) {
-                        return false;
-                    } else {
-                        $(this).find("button").prop("disabled", true);
-                        Stripe.card.createToken($form, stripeResponseHandler);
-                        return false;
-                    }
+                    $(this).find("button").prop("disabled", true);
+                    Stripe.card.createToken($form, stripeResponseHandler);
+                    return false;
                 });
             });';
             $view->registerJs($js);
