@@ -100,15 +100,6 @@ class StripeForm extends \yii\widgets\ActiveForm
     public function init() {
         parent::init();
 
-        //Set default request behavior when no client validation applied
-        if (!isset($this->stripeRequestHandler)) {
-            $this->stripeRequestHandler = 'jQuery(function($) {
-                $("#' . $this->options['id'] . '").submit(function(event) {
-                    event.preventDefault();
-                });
-            });';
-        }
-
         //Set default response behavior
         if (!isset($this->stripeResponseHandler)) {
             $this->stripeResponseHandler = 'function stripeResponseHandler(status, response) {
@@ -177,7 +168,7 @@ class StripeForm extends \yii\widgets\ActiveForm
                     return this;
                 };
 
-                $("#' . $this->options['id'] . ' button").on("click", function(e) {
+                $("#' . $this->options['id'] . '").on("beforeSubmit", function(e) {
                     var $form = $("#' . $this->options['id'] . '");
                     var $number = $("input[data-stripe=' . self::NUMBER_ID . ']");
                     var $cvc = $("input[data-stripe=' . self::CVC_ID . ']");
@@ -202,13 +193,9 @@ class StripeForm extends \yii\widgets\ActiveForm
                         $year.toggleInputError(!$.payment.validateCardExpiry($month.val(), $year.val()));
                     }
 
-                    if ($form.find(".' . $this->errorClass . '").length != 0) {
-                        return false;
-                    } else {
-                        $(this).prop("disabled", true);
-                        Stripe.card.createToken($form, stripeResponseHandler);
-                        return true;
-                    }
+                    $(this).find("button").prop("disabled", true);
+                    Stripe.card.createToken($form, stripeResponseHandler);
+                    return false;
                 });
             });';
             $view->registerJs($js);
